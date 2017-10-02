@@ -19,10 +19,14 @@ public class FlockingMovement : MonoBehaviour {
     public float sin_frequency = 2.0f;
     public float sin_magnitude = 2.0f;
 
+    [Header("Cone Collision info")]
+    public float viewAngle = 30.0f;
+
     Rigidbody2D rb;
 
     float m_lifetime = 0.0f;
     GameObject[] flock_members;
+    Rigidbody2D[] allRb;
 
 	// Use this for initialization
 	void Start () {
@@ -30,7 +34,8 @@ public class FlockingMovement : MonoBehaviour {
 
         // find all objects with the same tag as me
         flock_members = GameObject.FindGameObjectsWithTag(gameObject.tag);
-	}
+        allRb = FindObjectsOfType(typeof(Rigidbody2D)) as Rigidbody2D[];
+    }
 	
 	
     // Update is called once per frame
@@ -120,6 +125,48 @@ public class FlockingMovement : MonoBehaviour {
         return pos_sum / flock_members.Length;
     }
 
+    //Cone Check, returns velocity adjustment based on closest detected collision
+    Vector2 CollisionCheck()
+    {
+        Vector2 adjust = Vector2.zero;
+
+        //get the direction this unit is moving
+        Vector2 heading = rb.velocity;
+        heading.Normalize();
+        //get the closest rigid Body in view
+        Rigidbody2D closestCollision = null;
+        float nextCol = Mathf.Infinity;
+        foreach (Rigidbody2D otherRB in allRb)
+        {
+            if (otherRB != rb)
+            {
+                Vector2 dirOther = otherRB.position - rb.position;
+                float distOther = dirOther.magnitude;
+
+                if (distOther < nextCol)
+                {
+                    //direction to the other as a unit Vector
+                    dirOther /= distOther;
+                    float angle = Vector2.Angle(heading, dirOther);
+                    if (angle < viewAngle && distOther < nextCol)
+                    {
+                        closestCollision = otherRB;
+                        nextCol = distOther;
+                    }
+                }
+
+            }
+        }
+
+        //a collision is predicted
+        if (nextCol < Mathf.Infinity)
+        {
+            //some avoid maneuver
+            print(this.name + " detects a collision with " + closestCollision.name);
+        }
+        return adjust;
+    }
+
     void FlockMovement()
     {
         // still need to match rotation
@@ -132,6 +179,8 @@ public class FlockingMovement : MonoBehaviour {
 
         // flock to center
         Vector2 center_strength = MatchVelocity();
+
+        CollisionCheck();
 
         // update my stats
         rb.AddForce(speration_strength + match_vel_strength + center_strength);
