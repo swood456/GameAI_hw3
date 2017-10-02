@@ -117,11 +117,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -5.5470552
+      value: -10.37
       objectReference: {fileID: 0}
     - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.9824207
+      value: 3.77
       objectReference: {fileID: 0}
     - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
       propertyPath: m_LocalPosition.z
@@ -146,6 +146,41 @@ Prefab:
     - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114296452442157634, guid: 6579a59bf1839434f9128514dfdd7e01,
+        type: 2}
+      propertyPath: max_angular_speed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114296452442157634, guid: 6579a59bf1839434f9128514dfdd7e01,
+        type: 2}
+      propertyPath: dest.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114296452442157634, guid: 6579a59bf1839434f9128514dfdd7e01,
+        type: 2}
+      propertyPath: sin_frequency
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114296452442157634, guid: 6579a59bf1839434f9128514dfdd7e01,
+        type: 2}
+      propertyPath: testing_sin
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114296452442157634, guid: 6579a59bf1839434f9128514dfdd7e01,
+        type: 2}
+      propertyPath: sin_magnitude
+      value: 3.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 50650762333481924, guid: 6579a59bf1839434f9128514dfdd7e01,
+        type: 2}
+      propertyPath: m_AngularDrag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114296452442157634, guid: 6579a59bf1839434f9128514dfdd7e01,
+        type: 2}
+      propertyPath: dest.x
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
