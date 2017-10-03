@@ -100,9 +100,9 @@ public class FlockingMovement : MonoBehaviour {
         {
             Vector2 diff = (gameObject.transform.position - obj.transform.position);
             float dist = diff.magnitude;
-            // for now I am doing inverse square, linear is also fine
+            // for now I am doing linear
             if(dist > float.Epsilon)
-                sep_str += seperation_strength_const / (dist * dist);
+                sep_str += seperation_strength_const / (dist);
 
             seperation_dir += diff;
         }
@@ -176,6 +176,16 @@ public class FlockingMovement : MonoBehaviour {
         return adjust;
     }
 
+    float averageRotation()
+    {
+        float rot_sum = 0.0f;
+        foreach(GameObject g in flock_members)
+        {
+            rot_sum += g.GetComponent<Rigidbody2D>().rotation;
+        }
+        return rot_sum / flock_members.Length;
+    }
+
     void FlockMovement()
     {
         // still need to match rotation
@@ -194,14 +204,13 @@ public class FlockingMovement : MonoBehaviour {
         // update my stats
         rb.AddForce(speration_strength + match_vel_strength + center_strength);
 
-        // unsure how to move towards the leader
-        bool leader_facing_down = Vector2.Dot(leader.position - transform.position, transform.up) <= 0.0f;
-        if (leader_facing_down)
+        // average out rotation
+        float avg_rot = averageRotation();
+        if(avg_rot < rb.rotation)
         {
             rb.AddTorque(-1.0f * angular_force);
             if (rb.angularVelocity < -1.0f * max_angular_speed)
                 rb.angularVelocity = -1.0f * max_angular_speed;
-
         }
         else
         {
@@ -209,12 +218,13 @@ public class FlockingMovement : MonoBehaviour {
             if (rb.angularVelocity > max_angular_speed)
                 rb.angularVelocity = max_angular_speed;
         }
-
+        
         rb.AddForce(acceleration * transform.right);
-
+        
         if (rb.velocity.magnitude > max_speed)
         {
             rb.velocity = rb.velocity.normalized * max_speed;
         }
+        
     }
 }
