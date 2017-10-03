@@ -413,11 +413,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -9.32
+      value: -8.55
       objectReference: {fileID: 0}
     - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.72
+      value: 3.04
       objectReference: {fileID: 0}
     - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
       propertyPath: m_LocalPosition.z
@@ -425,19 +425,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.056587644
       objectReference: {fileID: 0}
     - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.99839765
       objectReference: {fileID: 0}
     - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
       propertyPath: m_RootOrder
@@ -445,21 +445,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1249767156052106, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
       propertyPath: m_Name
-      value: green_tri (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1249767156052106, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
-      propertyPath: m_TagString
-      value: GreenFlock
-      objectReference: {fileID: 0}
-    - target: {fileID: 114296452442157634, guid: 6579a59bf1839434f9128514dfdd7e01,
-        type: 2}
-      propertyPath: seperation_strength_const
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114296452442157634, guid: 6579a59bf1839434f9128514dfdd7e01,
-        type: 2}
-      propertyPath: center_strength_const
-      value: 2
+      value: green_tri leader
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}

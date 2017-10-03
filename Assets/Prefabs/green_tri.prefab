@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 50650762333481924}
   m_Layer: 0
   m_Name: green_tri
-  m_TagString: Untagged
+  m_TagString: GreenFlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,13 +35,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1249767156052106}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.37, y: 3.77, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.056587644, w: 0.99839765}
+  m_LocalPosition: {x: -8.55, y: 3.04, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 6.4880004}
 --- !u!50 &50650762333481924
 Rigidbody2D:
   serializedVersion: 4
@@ -55,7 +55,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 1
+  m_AngularDrag: 3
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -73,13 +73,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c16de8627fd51e47a67fe93772a30a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  seperation_strength_const: 5
+  center_strength_const: 2
+  is_leader: 0
   max_speed: 3
-  acceleration: 1
-  angular_force: 1
-  max_angular_speed: 20
+  acceleration: 4
+  angular_force: 5
+  max_angular_speed: 80
   sin_frequency: 1.5
   sin_magnitude: 3.75
-  dest: {x: 5, y: -10}
+  turn_time: 1.5
+  straight_time: 2
+  viewAngle: 30
 --- !u!212 &212817390904263826
 SpriteRenderer:
   m_ObjectHideFlags: 1

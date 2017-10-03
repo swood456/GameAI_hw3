@@ -7,6 +7,7 @@ public class FlockingMovement : MonoBehaviour {
     [Header("Flocking info")]
     public float seperation_strength_const;
     public float center_strength_const;
+    public bool is_leader = false;
 
     [Header("Seek information")]
     public float max_speed = 1.0f;
@@ -18,6 +19,8 @@ public class FlockingMovement : MonoBehaviour {
     [Header("General Movement information")]
     public float sin_frequency = 2.0f;
     public float sin_magnitude = 2.0f;
+    public float turn_time = 0.5f;
+    public float straight_time = 1.0f;
 
     [Header("Cone Collision info")]
     public float viewAngle = 30.0f;
@@ -27,6 +30,10 @@ public class FlockingMovement : MonoBehaviour {
     float m_lifetime = 0.0f;
     GameObject[] flock_members;
     Rigidbody2D[] allRb;
+    float cur_turn_time;
+    float cur_straight_time = 0.0f;
+    bool turn_down = true;
+
 
 	// Use this for initialization
 	void Start () {
@@ -35,52 +42,55 @@ public class FlockingMovement : MonoBehaviour {
         // find all objects with the same tag as me
         flock_members = GameObject.FindGameObjectsWithTag(gameObject.tag);
         allRb = FindObjectsOfType(typeof(Rigidbody2D)) as Rigidbody2D[];
+
+        cur_turn_time = turn_time / 2;
     }
 	
 	
     // Update is called once per frame
 	void FixedUpdate () {
+        if(!is_leader)
+            FlockMovement();
+        if (is_leader)
+            MoveLeader();
+    }
 
-        FlockMovement();
-
-        /*
-         * // manually move the agent in a sine curve
-        dest = transform.position;
-        dest.y = Mathf.Sin(sin_frequency * m_lifetime) * sin_magnitude;
-        dest.x += max_speed * Time.deltaTime;
-        transform.position = dest;
-
-        m_lifetime += Time.deltaTime;
-        */
-
-        //seek
-        
-        // for now always go at max speed
-        //rb.AddForce(transform.right * acceleration);
+    void MoveLeader()
+    {
+        rb.AddForce(transform.right * acceleration);
         if (rb.velocity.magnitude > max_speed)
             rb.velocity = transform.right * max_speed;
 
-        /*
-        float m_dot = Vector2.Dot(transform.up, (dest - (Vector2)transform.position).normalized);
-        if (Mathf.Abs(m_dot) > 0.01f)
+        if(cur_turn_time < turn_time)
         {
-            if(m_dot > 0)
-            {
-                rb.AddTorque(angular_force);
-                if (rb.angularVelocity > max_angular_speed)
-                    rb.angularVelocity = max_angular_speed;
-            }
-            else
+            //add a torque
+            if(turn_down)
             {
                 rb.AddTorque(-1.0f * angular_force);
                 if (rb.angularVelocity < -1.0f * max_angular_speed)
                     rb.angularVelocity = -1.0f * max_angular_speed;
+                    
             }
-            
-            
-        }
-        */
+            else
+            {
+                rb.AddTorque(angular_force);
+                if (rb.angularVelocity > max_angular_speed)
+                    rb.angularVelocity = max_angular_speed;
+                    
+            }
 
+            cur_turn_time += Time.fixedDeltaTime;
+        }
+        else
+        {
+            if (cur_straight_time >= straight_time)
+            {
+                turn_down = !turn_down;
+                cur_turn_time = 0.0f;
+                cur_straight_time = 0.0f;
+            }
+            cur_straight_time += Time.fixedDeltaTime;
+        }
     }
 
     Vector2 CalcSeperation()
