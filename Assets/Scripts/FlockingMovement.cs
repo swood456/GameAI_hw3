@@ -17,8 +17,6 @@ public class FlockingMovement : MonoBehaviour {
     public float max_angular_speed = 3.0f;
 
     [Header("General Movement information")]
-    public float sin_frequency = 2.0f;
-    public float sin_magnitude = 2.0f;
     public float turn_time = 0.5f;
     public float straight_time = 1.0f;
 
@@ -26,14 +24,14 @@ public class FlockingMovement : MonoBehaviour {
     public float viewAngle = 30.0f;
 
     Rigidbody2D rb;
-
-    float m_lifetime = 0.0f;
+    
     GameObject[] flock_members;
     Rigidbody2D[] allRb;
     float cur_turn_time;
     float cur_straight_time = 0.0f;
     bool turn_down = true;
 
+    public Transform leader;
 
 	// Use this for initialization
 	void Start () {
@@ -186,7 +184,7 @@ public class FlockingMovement : MonoBehaviour {
         Vector2 speration_strength = CalcSeperation();
 
         // match velocity
-        //Vector2 match_vel_strength = MatchVelocity();
+        Vector2 match_vel_strength = MatchVelocity();
 
         // flock to center
         Vector2 center_strength = MoveCenterStrength();
@@ -194,9 +192,26 @@ public class FlockingMovement : MonoBehaviour {
         CollisionCheck();
 
         // update my stats
-        //rb.AddForce(speration_strength + match_vel_strength + center_strength);
-        rb.AddForce(speration_strength + center_strength);
-        //rb.AddForce(center_strength);
+        rb.AddForce(speration_strength + match_vel_strength + center_strength);
+
+        // unsure how to move towards the leader
+        bool leader_facing_down = Vector2.Dot(leader.position - transform.position, transform.up) <= 0.0f;
+        if (leader_facing_down)
+        {
+            rb.AddTorque(-1.0f * angular_force);
+            if (rb.angularVelocity < -1.0f * max_angular_speed)
+                rb.angularVelocity = -1.0f * max_angular_speed;
+
+        }
+        else
+        {
+            rb.AddTorque(angular_force);
+            if (rb.angularVelocity > max_angular_speed)
+                rb.angularVelocity = max_angular_speed;
+        }
+
+        rb.AddForce(acceleration * transform.right);
+
         if (rb.velocity.magnitude > max_speed)
         {
             rb.velocity = rb.velocity.normalized * max_speed;
