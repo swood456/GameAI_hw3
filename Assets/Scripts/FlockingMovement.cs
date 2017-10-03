@@ -133,12 +133,7 @@ public class FlockingMovement : MonoBehaviour {
         }
 
         Vector2 center_point = pos_sum / flock_members.Length;
-        return (center_point - (Vector2)gameObject.transform.position);
-        //float dist = diff.magnitude;
-        // for now I am doing inverse square, linear is also fine
-
-        //diff;
-        //return ; // inverse square force from center
+        return (center_point - (Vector2)gameObject.transform.position) * center_strength_const;
     }
 
     //Cone Check, returns velocity adjustment based on closest detected collision
