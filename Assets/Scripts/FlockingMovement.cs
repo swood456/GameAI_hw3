@@ -132,7 +132,13 @@ public class FlockingMovement : MonoBehaviour {
             pos_sum += (Vector2) obj.transform.position;
         }
 
-        return pos_sum / flock_members.Length;
+        Vector2 center_point = pos_sum / flock_members.Length;
+        return (center_point - (Vector2)gameObject.transform.position);
+        //float dist = diff.magnitude;
+        // for now I am doing inverse square, linear is also fine
+
+        //diff;
+        //return ; // inverse square force from center
     }
 
     //Cone Check, returns velocity adjustment based on closest detected collision
@@ -185,14 +191,20 @@ public class FlockingMovement : MonoBehaviour {
         Vector2 speration_strength = CalcSeperation();
 
         // match velocity
-        Vector2 match_vel_strength = MatchVelocity();
+        //Vector2 match_vel_strength = MatchVelocity();
 
         // flock to center
-        Vector2 center_strength = MatchVelocity();
+        Vector2 center_strength = MoveCenterStrength();
 
         CollisionCheck();
 
         // update my stats
-        rb.AddForce(speration_strength + match_vel_strength + center_strength);
+        //rb.AddForce(speration_strength + match_vel_strength + center_strength);
+        rb.AddForce(speration_strength + center_strength);
+        //rb.AddForce(center_strength);
+        if (rb.velocity.magnitude > max_speed)
+        {
+            rb.velocity = rb.velocity.normalized * max_speed;
+        }
     }
 }
