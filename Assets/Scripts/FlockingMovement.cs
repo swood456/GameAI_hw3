@@ -29,7 +29,7 @@ public class FlockingMovement : MonoBehaviour {
     Rigidbody2D[] allRb;
     float cur_turn_time;
     float cur_straight_time = 0.0f;
-    bool turn_down = true;
+    public bool turn_down = true;
 
     public Transform leader;
 
