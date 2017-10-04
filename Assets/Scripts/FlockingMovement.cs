@@ -20,8 +20,9 @@ public class FlockingMovement : MonoBehaviour {
     public float turn_time = 0.5f;
     public float straight_time = 1.0f;
 
-    [Header("Cone Collision info")]
+    [Header("Collision info")]
     public float viewAngle = 30.0f;
+    public float avoidanceConstant;
     float colRadius = 0.25f;
 
     Rigidbody2D rb;
@@ -240,9 +241,9 @@ public class FlockingMovement : MonoBehaviour {
 
         relPos.Normalize();
 
-        //adjust = relPos * acceleration;
+        adjust = relPos * acceleration * avoidanceConstant;
 
-        print(this.name + " detects a collision with " +firstTarget.name + " with " + relPos.magnitude);
+        print(this.name + " detects a collision with " +firstTarget.name);
         return adjust;
 
     }
@@ -273,7 +274,7 @@ public class FlockingMovement : MonoBehaviour {
         //collision prediction
         Vector2 collision = CollisionCheck();
 
-        //print(speration_strength.magnitude + " " + match_vel_strength.magnitude + " " + center_strength.magnitude + " " + collision.magnitude);
+        print(speration_strength.magnitude + " " + match_vel_strength.magnitude + " " + center_strength.magnitude + " " + collision.magnitude);
 
         // update my stats
         rb.AddForce(speration_strength + match_vel_strength + center_strength + collision);
@@ -299,6 +300,8 @@ public class FlockingMovement : MonoBehaviour {
         {
             rb.velocity = rb.velocity.normalized * max_speed;
         }
+
+        Debug.DrawRay(rb.position, rb.velocity);
         
     }
 }
