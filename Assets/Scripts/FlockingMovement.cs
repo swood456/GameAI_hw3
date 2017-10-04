@@ -26,7 +26,10 @@ public class FlockingMovement : MonoBehaviour {
     float colRadius = 0.25f;
 
     Rigidbody2D rb;
-    
+    public LineRenderer sep_line;
+    public LineRenderer vel_line;
+    public LineRenderer center_line;
+
     //GameObject[] flock_members;
     Rigidbody2D[] flock_members;
     Rigidbody2D[] allRb;
@@ -275,12 +278,28 @@ public class FlockingMovement : MonoBehaviour {
 
         // Seperation strength:
         Vector2 speration_strength = CalcSeperation();
+        if(sep_line)
+        {
+            sep_line.SetPosition(0, transform.position);
+            sep_line.SetPosition(1, transform.position + (Vector3)speration_strength * 0.0125f * seperation_strength_const);
+        }
+        
 
         // match velocity
         Vector2 match_vel_strength = MatchVelocity();
+        if(vel_line)
+        {
+            vel_line.SetPosition(0, transform.position);
+            vel_line.SetPosition(1, transform.position + (Vector3)match_vel_strength * 0.25f);
+        }
 
         // flock to center
         Vector2 center_strength = MoveCenterStrength();
+        if (center_line)
+        {
+            center_line.SetPosition(0, transform.position);
+            center_line.SetPosition(1, transform.position + (Vector3)center_strength * 0.0125f * center_strength_const);
+        }
 
         //collision prediction
         Vector2 collision = CollisionCheck();
