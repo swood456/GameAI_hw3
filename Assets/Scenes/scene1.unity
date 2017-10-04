@@ -167,6 +167,9 @@ MonoBehaviour:
   turn_time: 1.5
   straight_time: 2
   viewAngle: 30
+  sep_line: {fileID: 0}
+  vel_line: {fileID: 0}
+  center_line: {fileID: 0}
   turn_down: 0
   leader: {fileID: 1005108775}
 --- !u!212 &85507213
@@ -263,33 +266,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1249767156052106, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
-      propertyPath: m_TagString
-      value: GreenFlock
-      objectReference: {fileID: 0}
-    - target: {fileID: 114296452442157634, guid: 6579a59bf1839434f9128514dfdd7e01,
-        type: 2}
-      propertyPath: seperation_strength_const
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114296452442157634, guid: 6579a59bf1839434f9128514dfdd7e01,
-        type: 2}
-      propertyPath: center_strength_const
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 114296452442157634, guid: 6579a59bf1839434f9128514dfdd7e01,
         type: 2}
       propertyPath: leader
       value: 
       objectReference: {fileID: 871051649}
-    - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
   m_IsPrefabParent: 0
@@ -430,6 +411,9 @@ MonoBehaviour:
   turn_time: 1.5
   straight_time: 2
   viewAngle: 30
+  sep_line: {fileID: 0}
+  vel_line: {fileID: 0}
+  center_line: {fileID: 0}
   turn_down: 0
   leader: {fileID: 1005108775}
 --- !u!212 &973591088
@@ -526,6 +510,9 @@ MonoBehaviour:
   turn_time: 1.5
   straight_time: 2
   viewAngle: 30
+  sep_line: {fileID: 0}
+  vel_line: {fileID: 0}
+  center_line: {fileID: 0}
   turn_down: 0
   leader: {fileID: 0}
 --- !u!212 &1005108774
@@ -808,6 +795,9 @@ MonoBehaviour:
   turn_time: 1.5
   straight_time: 2
   viewAngle: 30
+  sep_line: {fileID: 0}
+  vel_line: {fileID: 0}
+  center_line: {fileID: 0}
   turn_down: 0
   leader: {fileID: 1005108775}
 --- !u!212 &1760477195
@@ -1001,6 +991,9 @@ MonoBehaviour:
   turn_time: 1.5
   straight_time: 2
   viewAngle: 30
+  sep_line: {fileID: 0}
+  vel_line: {fileID: 0}
+  center_line: {fileID: 0}
   turn_down: 1
   leader: {fileID: 871051649}
 --- !u!212 &1842501391
@@ -1117,6 +1110,9 @@ MonoBehaviour:
   turn_time: 1.5
   straight_time: 2
   viewAngle: 30
+  sep_line: {fileID: 0}
+  vel_line: {fileID: 0}
+  center_line: {fileID: 0}
   turn_down: 0
   leader: {fileID: 1005108775}
 --- !u!212 &1940006899
