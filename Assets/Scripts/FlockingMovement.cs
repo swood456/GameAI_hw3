@@ -22,6 +22,7 @@ public class FlockingMovement : MonoBehaviour {
 
     [Header("Cone Collision info")]
     public float viewAngle = 30.0f;
+    float colRadius = 0.25f;
 
     Rigidbody2D rb;
     
@@ -135,7 +136,7 @@ public class FlockingMovement : MonoBehaviour {
     }
 
     //Cone Check, returns velocity adjustment based on closest detected collision
-    Vector2 CollisionCheck()
+    Vector2 ConeCheck()
     {
         Vector2 adjust = Vector2.zero;
 
@@ -176,6 +177,57 @@ public class FlockingMovement : MonoBehaviour {
         return adjust;
     }
 
+    Vector2 CollisionCheck()
+    {
+        Vector2 adjust = Vector2.zero;
+
+        float shortestTime = Mathf.Infinity;
+        Rigidbody2D firstTarget = null;
+        float firstMinSeperation = Mathf.Infinity;
+        float firstDistance = Mathf.Infinity;
+        Vector2 firstRelativePos = Vector2.positiveInfinity;
+        Vector2 firstRelativeVel = Vector2.positiveInfinity;
+
+        foreach (Rigidbody2D target in allRb)
+        {
+            //calculate time to collision
+            Vector2 relativePos = target.position - rb.position;
+            Vector2 relativeVel = target.velocity - rb.velocity;
+            float relativeSpeed = relativeVel.magnitude;
+            float tClosest = -Vector2.Dot(relativePos, relativeVel) / (relativeSpeed * relativeSpeed);
+
+            //check if a collision exists
+            float distance = relativePos.magnitude;
+            float minSeperation = distance - relativeSpeed * tClosest;
+            if (minSeperation > colRadius*2)
+            {
+                continue;
+            }
+
+            //Check if this is the closest projected collision
+            if (tClosest > 0 && tClosest < shortestTime)
+            {
+                shortestTime = tClosest;
+                firstTarget = target;
+                firstMinSeperation = minSeperation;
+                firstDistance = distance;
+                firstRelativePos = relativePos;
+                firstRelativeVel = relativeVel;
+            }
+        }
+
+        //a collision is predicted
+        if (firstTarget != null)
+        {
+
+            Debug.DrawRay(rb.position, rb.velocity);
+            //some avoid maneuver
+            print(this.name + " detects a collision with " +firstTarget.name);
+        }
+        return adjust;
+
+    }
+
     float averageRotation()
     {
         float rot_sum = 0.0f;
@@ -199,10 +251,11 @@ public class FlockingMovement : MonoBehaviour {
         // flock to center
         Vector2 center_strength = MoveCenterStrength();
 
-        CollisionCheck();
+        //collision prediction
+        Vector2 collision = CollisionCheck();
 
         // update my stats
-        rb.AddForce(speration_strength + match_vel_strength + center_strength);
+        rb.AddForce(speration_strength + match_vel_strength + center_strength + collision);
 
         // average out rotation
         float avg_rot = averageRotation();
