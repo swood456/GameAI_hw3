@@ -22,8 +22,8 @@ public class FlockingMovement : MonoBehaviour {
 
     [Header("Collision info")]
     public float viewAngle = 30.0f;
-    public float avoidanceConstant = 5.0f;
-    float colRadius = 0.25f;
+    public float avoidanceConstant = 15.0f;
+    float colRadius = 0.3f;
 
     Rigidbody2D rb;
     public LineRenderer sep_line;
@@ -128,9 +128,7 @@ public class FlockingMovement : MonoBehaviour {
         Vector2 velocity_sum = Vector2.zero;
         foreach (Rigidbody2D obj in flock_members)
         {
-            // probably not great to get all these rb every frame
-            Rigidbody2D obj_rb = GetComponent<Rigidbody2D>();
-            velocity_sum += rb.velocity;
+            velocity_sum += obj.velocity;
         }
 
         velocity_sum /= flock_members.Length;
@@ -198,7 +196,6 @@ public class FlockingMovement : MonoBehaviour {
 
     Vector2 CollisionCheck()
     {
-        Vector2 adjust = Vector2.zero;
 
         float shortestTime = Mathf.Infinity;
         Rigidbody2D firstTarget = null;
@@ -207,6 +204,7 @@ public class FlockingMovement : MonoBehaviour {
         Vector2 firstRelativePos = Vector2.positiveInfinity;
         Vector2 firstRelativeVel = Vector2.positiveInfinity;
 
+        //find the clossest collision
         foreach (Rigidbody2D target in allRb)
         {
             //calculate time to collision
@@ -237,7 +235,7 @@ public class FlockingMovement : MonoBehaviour {
 
         if (firstTarget == null)
         {
-            return adjust;
+            return Vector2.zero;
         }
 
         Vector2 relPos;
@@ -254,11 +252,9 @@ public class FlockingMovement : MonoBehaviour {
 
         relPos.Normalize();
 
-        adjust = relPos * acceleration;
-
-        //print("relPos = "+ relPos.x + "," + relPos.y + ", " + acceleration);
-        //print(this.name + " detects a collision with " +firstTarget.name);
-        return adjust;
+        Debug.DrawRay(rb.position, relPos, Color.white);
+        print(this.name + " detects a collision with " +firstTarget.name);
+        return relPos;
 
     }
 
@@ -283,7 +279,7 @@ public class FlockingMovement : MonoBehaviour {
             sep_line.SetPosition(0, transform.position);
             sep_line.SetPosition(1, transform.position + (Vector3)speration_strength * 0.0125f * seperation_strength_const);
         }
-        
+        Debug.DrawRay(rb.position, speration_strength, Color.blue);
 
         // match velocity
         Vector2 match_vel_strength = MatchVelocity();
@@ -292,6 +288,7 @@ public class FlockingMovement : MonoBehaviour {
             vel_line.SetPosition(0, transform.position);
             vel_line.SetPosition(1, transform.position + (Vector3)match_vel_strength * 0.25f);
         }
+        Debug.DrawRay(rb.position, match_vel_strength, Color.red);
 
         // flock to center
         Vector2 center_strength = MoveCenterStrength();
@@ -300,6 +297,7 @@ public class FlockingMovement : MonoBehaviour {
             center_line.SetPosition(0, transform.position);
             center_line.SetPosition(1, transform.position + (Vector3)center_strength * 0.0125f * center_strength_const);
         }
+        Debug.DrawRay(rb.position, center_strength, Color.green);
 
         //collision prediction
         Vector2 collision = CollisionCheck();
@@ -307,14 +305,14 @@ public class FlockingMovement : MonoBehaviour {
         //print(speration_strength * seperation_strength_const + " " + match_vel_strength + " " + center_strength * center_strength_const + " " + collision);
         //print("sep const: " + seperation_strength_const + ", center str: " + center_strength_const);
 
+        Vector2 total = (speration_strength * seperation_strength_const) + match_vel_strength + (center_strength * center_strength_const) + (collision * avoidanceConstant);
 
-        Vector2 total = Vector2.zero;
-        total += (speration_strength * seperation_strength_const);
-        total += match_vel_strength;
-        total += (center_strength * center_strength_const);
-        total += (collision * avoidanceConstant);
+        total.Normalize();
+        total *= acceleration;
 
-        print(total);
+        Debug.DrawRay(rb.position, total, Color.yellow);
+
+        
 
         // update my stats
         //rb.AddForce(speration_strength + match_vel_strength + center_strength + collision);
@@ -342,7 +340,7 @@ public class FlockingMovement : MonoBehaviour {
             rb.velocity = rb.velocity.normalized * max_speed;
         }
 
-        Debug.DrawRay(rb.position, rb.velocity);
+        Debug.DrawRay(rb.position, rb.velocity, Color.black);
         
     }
 }
