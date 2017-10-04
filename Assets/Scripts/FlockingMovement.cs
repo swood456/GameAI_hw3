@@ -22,7 +22,7 @@ public class FlockingMovement : MonoBehaviour {
 
     [Header("Collision info")]
     public float viewAngle = 30.0f;
-    public float avoidanceConstant;
+    public float avoidanceConstant = 5.0f;
     float colRadius = 0.25f;
 
     Rigidbody2D rb;
@@ -113,7 +113,11 @@ public class FlockingMovement : MonoBehaviour {
 
             seperation_dir += diff;
         }
-        return sep_str * seperation_dir.normalized;
+
+
+        //return sep_str * seperation_dir.normalized;
+
+        return seperation_dir.normalized;
     }
 
     Vector2 MatchVelocity()
@@ -126,7 +130,10 @@ public class FlockingMovement : MonoBehaviour {
             velocity_sum += rb.velocity;
         }
 
-        return velocity_sum / flock_members.Length;
+        velocity_sum /= flock_members.Length;
+        velocity_sum.Normalize();
+
+        return velocity_sum;
     }
 
     Vector2 MoveCenterStrength()
@@ -138,7 +145,10 @@ public class FlockingMovement : MonoBehaviour {
         }
 
         Vector2 center_point = pos_sum / flock_members.Length;
-        return (center_point - (Vector2)gameObject.transform.position) * center_strength_const;
+
+        Vector2 centerDir = (center_point - (Vector2)gameObject.transform.position);
+        centerDir.Normalize();
+        return centerDir;
     }
 
     //Cone Check, returns velocity adjustment based on closest detected collision
@@ -241,9 +251,10 @@ public class FlockingMovement : MonoBehaviour {
 
         relPos.Normalize();
 
-        adjust = relPos * acceleration * avoidanceConstant;
+        adjust = relPos * acceleration;
 
-        print(this.name + " detects a collision with " +firstTarget.name);
+        //print("relPos = "+ relPos.x + "," + relPos.y + ", " + acceleration);
+        //print(this.name + " detects a collision with " +firstTarget.name);
         return adjust;
 
     }
@@ -274,10 +285,21 @@ public class FlockingMovement : MonoBehaviour {
         //collision prediction
         Vector2 collision = CollisionCheck();
 
-        print(speration_strength.magnitude + " " + match_vel_strength.magnitude + " " + center_strength.magnitude + " " + collision.magnitude);
+        //print(speration_strength * seperation_strength_const + " " + match_vel_strength + " " + center_strength * center_strength_const + " " + collision);
+        //print("sep const: " + seperation_strength_const + ", center str: " + center_strength_const);
+
+
+        Vector2 total = Vector2.zero;
+        total += (speration_strength * seperation_strength_const);
+        total += match_vel_strength;
+        total += (center_strength * center_strength_const);
+        total += (collision * avoidanceConstant);
+
+        print(total);
 
         // update my stats
-        rb.AddForce(speration_strength + match_vel_strength + center_strength + collision);
+        //rb.AddForce(speration_strength + match_vel_strength + center_strength + collision);
+        rb.AddForce(total);
 
         // average out rotation
         float avg_rot = averageRotation();
