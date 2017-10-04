@@ -50,8 +50,7 @@ public class FlockingMovement : MonoBehaviour {
 
         cur_turn_time = turn_time / 2;
     }
-	
-	
+
     // Update is called once per frame
 	void FixedUpdate () {
         if(!is_leader)
@@ -222,14 +221,28 @@ public class FlockingMovement : MonoBehaviour {
             }
         }
 
-        //a collision is predicted
-        if (firstTarget != null)
+        if (firstTarget == null)
         {
-
-            Debug.DrawRay(rb.position, rb.velocity);
-            //some avoid maneuver
-            print(this.name + " detects a collision with " +firstTarget.name);
+            return adjust;
         }
+
+        Vector2 relPos;
+
+        //the collision ispredicted to be head on or is already happening
+        if (firstMinSeperation <= 0 || firstDistance < 2* colRadius)
+        {
+            relPos = firstTarget.position - rb.position;
+        }
+        else
+        {
+            relPos = firstRelativePos + firstRelativeVel * shortestTime;
+        }
+
+        relPos.Normalize();
+
+        //adjust = relPos * acceleration;
+
+        print(this.name + " detects a collision with " +firstTarget.name + " with " + relPos.magnitude);
         return adjust;
 
     }
@@ -259,6 +272,8 @@ public class FlockingMovement : MonoBehaviour {
 
         //collision prediction
         Vector2 collision = CollisionCheck();
+
+        //print(speration_strength.magnitude + " " + match_vel_strength.magnitude + " " + center_strength.magnitude + " " + collision.magnitude);
 
         // update my stats
         rb.AddForce(speration_strength + match_vel_strength + center_strength + collision);
