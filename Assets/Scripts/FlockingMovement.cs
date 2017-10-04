@@ -26,7 +26,8 @@ public class FlockingMovement : MonoBehaviour {
 
     Rigidbody2D rb;
     
-    GameObject[] flock_members;
+    //GameObject[] flock_members;
+    Rigidbody2D[] flock_members;
     Rigidbody2D[] allRb;
     float cur_turn_time;
     float cur_straight_time = 0.0f;
@@ -39,7 +40,12 @@ public class FlockingMovement : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
 
         // find all objects with the same tag as me
-        flock_members = GameObject.FindGameObjectsWithTag(gameObject.tag);
+        GameObject[] flock_member_objs = GameObject.FindGameObjectsWithTag(gameObject.tag);
+        flock_members = new Rigidbody2D[flock_member_objs.Length];
+        for(int i = 0; i < flock_members.Length; ++i)
+        {
+            flock_members[i] = flock_member_objs[i].GetComponent<Rigidbody2D>();
+        }
         allRb = FindObjectsOfType(typeof(Rigidbody2D)) as Rigidbody2D[];
 
         cur_turn_time = turn_time / 2;
@@ -97,7 +103,7 @@ public class FlockingMovement : MonoBehaviour {
         //Vector2 seperation_sum = Vector2.zero;
         float sep_str = 0.0f;
         Vector2 seperation_dir = Vector2.zero;
-        foreach (GameObject obj in flock_members)
+        foreach (Rigidbody2D obj in flock_members)
         {
             Vector2 diff = (gameObject.transform.position - obj.transform.position);
             float dist = diff.magnitude;
@@ -113,7 +119,7 @@ public class FlockingMovement : MonoBehaviour {
     Vector2 MatchVelocity()
     {
         Vector2 velocity_sum = Vector2.zero;
-        foreach (GameObject obj in flock_members)
+        foreach (Rigidbody2D obj in flock_members)
         {
             // probably not great to get all these rb every frame
             Rigidbody2D obj_rb = GetComponent<Rigidbody2D>();
@@ -126,7 +132,7 @@ public class FlockingMovement : MonoBehaviour {
     Vector2 MoveCenterStrength()
     {
         Vector2 pos_sum = Vector2.zero;
-        foreach (GameObject obj in flock_members)
+        foreach (Rigidbody2D obj in flock_members)
         {
             pos_sum += (Vector2) obj.transform.position;
         }
@@ -231,7 +237,7 @@ public class FlockingMovement : MonoBehaviour {
     float averageRotation()
     {
         float rot_sum = 0.0f;
-        foreach(GameObject g in flock_members)
+        foreach(Rigidbody2D g in flock_members)
         {
             rot_sum += g.GetComponent<Rigidbody2D>().rotation;
         }
