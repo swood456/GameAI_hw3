@@ -22,6 +22,7 @@ public class FlockingMovement : MonoBehaviour {
     public float straight_time = 1.0f;
 
     [Header("Collision info")]
+    public bool usingConeCheck;
     public float viewAngle = 30.0f;
     public float coneRange = 3;
     public float avoidanceConstant = 15.0f;
@@ -203,11 +204,12 @@ public class FlockingMovement : MonoBehaviour {
         //a collision is predicted
         if (nextCol < coneRange)
         {
-            adjust = closestCollision.position - rb.position;
+            adjust = -(closestCollision.position - rb.position);
             adjust.Normalize();
             //some avoid maneuver
-            //print(this.name + " detects a collision with " + closestCollision.name);
+            print(this.name + " detects a collision with " + closestCollision.name);
         }
+        Debug.DrawRay(rb.position, adjust, Color.gray);
         return adjust;
     }
 
@@ -312,8 +314,16 @@ public class FlockingMovement : MonoBehaviour {
             center_line.SetPosition(1, transform.position + (Vector3)center_strength *center_strength_const);
         }
 
+        Vector2 collision;
         //collision prediction
-        Vector2 collision = CollisionCheck();
+        if (usingConeCheck)
+        {
+            collision = ConeCheck();
+        }
+        else
+        {
+            collision = CollisionCheck();
+        }
 
         Vector2 total = (speration_strength * seperation_strength_const) + match_vel_strength + (center_strength * center_strength_const) + (collision * avoidanceConstant);
 
