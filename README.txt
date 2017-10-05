@@ -1,4 +1,6 @@
-﻿1. What did you do for avoiding a group of agents? What are the weights of path following and evade behavior?
+﻿Stephanie Manley, 
+
+1. What did you do for avoiding a group of agents? What are the weights of path following and evade behavior?
 The code as written uses collision prediction to avoid colliding with any individual or group in the scene. To view the scene with cone check instead, there is a public Boolean “usingConeCheck” that can be toggled from the prefabs for both flocks. The weights of collision avoidance and flocking behavior are all the same, which has seemed to work well.
 
 
