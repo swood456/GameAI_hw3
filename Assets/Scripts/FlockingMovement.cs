@@ -36,7 +36,6 @@ public class FlockingMovement : MonoBehaviour {
     public LineRenderer sep_line;
     public LineRenderer vel_line;
     public LineRenderer center_line;
-    public LineRenderer cone_line;
 
     //GameObject[] flock_members;
     Rigidbody2D[] flock_members;
@@ -226,7 +225,7 @@ public class FlockingMovement : MonoBehaviour {
         Color coneColor = Color.white;
 
         //get the direction this unit is moving
-        Vector2 heading = (Vector2)(Quaternion.Euler(0, 0, rb.rotation) * Vector2.right);
+        Vector2 heading = rb.velocity;
         heading.Normalize();
         //get the closest rigid Body in view
         Rigidbody2D closestCollision = null;
@@ -254,37 +253,17 @@ public class FlockingMovement : MonoBehaviour {
         }
 
         //a collision is predicted
-        if (nextCol <= coneRange)
+        if (nextCol < coneRange)
         {
             //try to avoid collision
             adjust = -(closestCollision.position - rb.position);
             adjust.Normalize();
             coneColor = Color.red;
-            print(this.name + " detects a collision with " + closestCollision.name);
+            //print(this.name + " detects a collision with " + closestCollision.name);
         }
 
-        //create an aproximation of a cone
-        int coneRes = 10;
-        Vector3[] conePoints = new Vector3[coneRes];
-        conePoints[0] = rb.position;
-        for (int i = 0; i < coneRes -1; ++i)
-        {
-            conePoints[i + 1] = (Vector3)(rb.position + (Vector2)(Quaternion.Euler(0, 0, (rb.rotation + viewAngle * ((2f * i)/coneRes - 1f))) * Vector2.right).normalized * coneRange);
-        }
-        //{ rb.position, rb.position + , rb.position + (Vector2)(Quaternion.Euler(0, 0, rb.rotation) * Vector2.right).normalized * coneRange, rb.position + (Vector2)(Quaternion.Euler(0, 0, rb.rotation - viewAngle) * Vector2.right).normalized * coneRange };
 
-        cone_line.positionCount = coneRes;
-        cone_line.SetPositions(conePoints);
-        cone_line.startColor = coneColor;
-        cone_line.endColor = coneColor;
-
-        //for (int i = 1; i < conePoints.Length; ++i)
-        //{
-        //    Debug.DrawLine(conePoints[i - 1], conePoints[i], coneColor);
-        //}
-        //Debug.DrawLine(conePoints[conePoints.Length - 1], conePoints[0], coneColor);
-
-        //Debug.DrawRay(rb.position, adjust, coneColor);
+        Debug.DrawRay(rb.position, adjust, Color.gray);
 
         return adjust;
     }
@@ -405,6 +384,8 @@ public class FlockingMovement : MonoBehaviour {
 
         total.Normalize();
         total *= acceleration;
+
+        Debug.DrawRay(rb.position, total, Color.yellow);
 
         // update my stats
         rb.AddForce(total);
