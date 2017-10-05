@@ -222,6 +222,7 @@ public class FlockingMovement : MonoBehaviour {
     Vector2 ConeCheck()
     {
         Vector2 adjust = Vector2.zero;
+        Color coneColor = Color.white;
 
         //get the direction this unit is moving
         Vector2 heading = rb.velocity;
@@ -254,12 +255,16 @@ public class FlockingMovement : MonoBehaviour {
         //a collision is predicted
         if (nextCol < coneRange)
         {
+            //try to avoid collision
             adjust = -(closestCollision.position - rb.position);
             adjust.Normalize();
-            //some avoid maneuver
-            print(this.name + " detects a collision with " + closestCollision.name);
+            coneColor = Color.red;
+            //print(this.name + " detects a collision with " + closestCollision.name);
         }
+
+
         Debug.DrawRay(rb.position, adjust, Color.gray);
+
         return adjust;
     }
 
@@ -406,8 +411,6 @@ public class FlockingMovement : MonoBehaviour {
         {
             rb.velocity = rb.velocity.normalized * max_speed;
         }
-
-        Debug.DrawRay(rb.position, rb.velocity, Color.black);
         
     }
 }

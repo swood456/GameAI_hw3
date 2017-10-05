@@ -173,7 +173,7 @@ MonoBehaviour:
   max_angular_speed: 80
   turn_time: 1.5
   straight_time: 6
-  usingConeCheck: 1
+  usingConeCheck: 0
   viewAngle: 30
   coneRange: 3
   avoidanceConstant: 1
