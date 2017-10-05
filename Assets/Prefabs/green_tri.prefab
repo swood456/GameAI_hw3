@@ -173,7 +173,7 @@ MonoBehaviour:
   turn_time: 1.5
   straight_time: 2
   viewAngle: 30
-  avoidanceConstant: 400
+  avoidanceConstant: 10
   sep_line: {fileID: 120250949531251150}
   vel_line: {fileID: 120035647745385536}
   center_line: {fileID: 120701366887565038}
