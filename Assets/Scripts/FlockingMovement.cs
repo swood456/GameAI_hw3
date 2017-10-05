@@ -277,7 +277,7 @@ public class FlockingMovement : MonoBehaviour {
         if(sep_line)
         {
             sep_line.SetPosition(0, transform.position);
-            sep_line.SetPosition(1, transform.position + (Vector3)speration_strength * 0.0125f * seperation_strength_const);
+            sep_line.SetPosition(1, transform.position + (Vector3)speration_strength * 0.125f * seperation_strength_const);
         }
         Debug.DrawRay(rb.position, speration_strength, Color.blue);
 
@@ -295,7 +295,7 @@ public class FlockingMovement : MonoBehaviour {
         if (center_line)
         {
             center_line.SetPosition(0, transform.position);
-            center_line.SetPosition(1, transform.position + (Vector3)center_strength * 0.0125f * center_strength_const);
+            center_line.SetPosition(1, transform.position + (Vector3)center_strength * 0.125f * center_strength_const);
         }
         Debug.DrawRay(rb.position, center_strength, Color.green);
 
