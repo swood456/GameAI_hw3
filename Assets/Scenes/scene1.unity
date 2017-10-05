@@ -490,6 +490,11 @@ Prefab:
       propertyPath: avoidanceConstant
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114296452442157634, guid: 6579a59bf1839434f9128514dfdd7e01,
+        type: 2}
+      propertyPath: usingConeCheck
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
   m_IsPrefabParent: 0
@@ -571,6 +576,11 @@ Prefab:
         type: 2}
       propertyPath: t
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 120125545296760332, guid: 2fada65a385194a43a466ae144404c84,
+        type: 2}
+      propertyPath: m_UseWorldSpace
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2fada65a385194a43a466ae144404c84, type: 2}
