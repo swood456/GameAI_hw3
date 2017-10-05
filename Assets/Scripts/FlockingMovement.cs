@@ -356,8 +356,6 @@ public class FlockingMovement : MonoBehaviour {
         {
             rb.velocity = rb.velocity.normalized * max_speed;
         }
-
-        Debug.DrawRay(rb.position, rb.velocity, Color.black);
         
     }
 }
