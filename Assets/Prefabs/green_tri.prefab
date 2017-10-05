@@ -97,7 +97,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1249767156052106}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.76, y: 4.09, z: 0}
+  m_LocalPosition: {x: -12.944752, y: 3.926722, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4722611708349772}
@@ -166,12 +166,17 @@ MonoBehaviour:
   seperation_strength_const: 3
   center_strength_const: 3
   is_leader: 0
+  leader_center_multiplier: 1
   max_speed: 3
   acceleration: 4
   angular_force: 5
   max_angular_speed: 80
   turn_time: 1.5
   straight_time: 2
+  sin_mag: 10
+  sin_freq: 1.25
+  dest_x_delta: 2
+  t: 1.75
   viewAngle: 30
   avoidanceConstant: 10
   sep_line: {fileID: 120250949531251150}
@@ -179,6 +184,7 @@ MonoBehaviour:
   center_line: {fileID: 120701366887565038}
   turn_down: 1
   leader: {fileID: 0}
+  test_dest_vis: {fileID: 0}
 --- !u!120 &120035647745385536
 LineRenderer:
   m_ObjectHideFlags: 1
