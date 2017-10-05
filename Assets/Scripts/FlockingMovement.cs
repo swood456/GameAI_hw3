@@ -23,7 +23,7 @@ public class FlockingMovement : MonoBehaviour {
     [Header("Collision info")]
     public float viewAngle = 30.0f;
     public float avoidanceConstant = 15.0f;
-    float colRadius = 0.5f;
+    float colRadius = 0.3f;
 
     Rigidbody2D rb;
     public LineRenderer sep_line;
@@ -305,7 +305,7 @@ public class FlockingMovement : MonoBehaviour {
         Vector2 total = (speration_strength * seperation_strength_const) + match_vel_strength + (center_strength * center_strength_const) + (collision * avoidanceConstant);
 
         total.Normalize();
-        total *= acceleration * Time.deltaTime;
+        total *= acceleration;
 
         Debug.DrawRay(rb.position, total, Color.yellow);
 
