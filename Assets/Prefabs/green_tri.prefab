@@ -163,28 +163,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c16de8627fd51e47a67fe93772a30a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seperation_strength_const: 3
-  center_strength_const: 3
+  seperation_strength_const: 1
+  center_strength_const: 1
   is_leader: 0
   leader_center_multiplier: 1
-  max_speed: 3
-  acceleration: 4
+  max_speed: 1
+  acceleration: 1
   angular_force: 5
   max_angular_speed: 80
   turn_time: 1.5
-  straight_time: 2
+  straight_time: 6
   sin_mag: 10
-  sin_freq: 1.25
+  sin_freq: 0.3
   dest_x_delta: 2
-  t: 1.75
+  t: 0
   viewAngle: 30
-  avoidanceConstant: 10
+  coneRange: 3
+  avoidanceConstant: 1
   sep_line: {fileID: 120250949531251150}
   vel_line: {fileID: 120035647745385536}
   center_line: {fileID: 120701366887565038}
   turn_down: 1
   leader: {fileID: 0}
-  test_dest_vis: {fileID: 0}
 --- !u!120 &120035647745385536
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -198,7 +198,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -219,7 +219,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 2
     widthMultiplier: 0.02
@@ -284,7 +284,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -305,7 +305,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 2
     widthMultiplier: 0.02
@@ -370,7 +370,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -391,7 +391,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 2
     widthMultiplier: 0.02

@@ -163,17 +163,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c16de8627fd51e47a67fe93772a30a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seperation_strength_const: 6
-  center_strength_const: 6
+  seperation_strength_const: 1
+  center_strength_const: 1
   is_leader: 0
-  max_speed: 3
-  acceleration: 4
+  leader_center_multiplier: 1
+  max_speed: 1
+  acceleration: 1
   angular_force: 5
   max_angular_speed: 80
   turn_time: 1.5
-  straight_time: 2
+  straight_time: 6
   viewAngle: 30
-  avoidanceConstant: 0
+  coneRange: 3
+  avoidanceConstant: 1
   sep_line: {fileID: 120729661109629548}
   vel_line: {fileID: 120125545296760332}
   center_line: {fileID: 120210762439498192}
@@ -187,12 +189,12 @@ LineRenderer:
   m_GameObject: {fileID: 1647274780633578}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -231,8 +233,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0.71034503, b: 1, a: 1}
+      key1: {r: 0, g: 0.8758621, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -255,7 +257,7 @@ LineRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -273,12 +275,12 @@ LineRenderer:
   m_GameObject: {fileID: 1832593197636024}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -317,8 +319,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 0.6413793, b: 0, a: 1}
+      key1: {r: 1, g: 0.80689657, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -359,12 +361,12 @@ LineRenderer:
   m_GameObject: {fileID: 1417988708201386}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -403,8 +405,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.6691177, g: 0.068879746, b: 0.578047, a: 1}
+      key1: {r: 0.6911765, g: 0, b: 0.61490834, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -427,7 +429,7 @@ LineRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
