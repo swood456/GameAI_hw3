@@ -20,6 +20,12 @@ public class FlockingMovement : MonoBehaviour {
     [Header("General Movement information")]
     public float turn_time = 0.5f;
     public float straight_time = 1.0f;
+    public float sin_mag = 5.0f;
+    public float sin_freq = 0.5f;
+    public float dest_x_delta = 0.25f;
+    public float t = 0.0f;
+
+    Vector2 dest;
 
     [Header("Collision info")]
     public bool usingConeCheck;
@@ -56,6 +62,8 @@ public class FlockingMovement : MonoBehaviour {
         allRb = FindObjectsOfType(typeof(Rigidbody2D)) as Rigidbody2D[];
 
         cur_turn_time = turn_time / 2;
+        dest = transform.position;
+        dest.x += dest_x_delta;
     }
 
     // Update is called once per frame
@@ -68,6 +76,38 @@ public class FlockingMovement : MonoBehaviour {
 
     void MoveLeader()
     {
+        /*
+        Vector2 dest;
+        dest.x = dest_x_delta + transform.position.x;
+        dest.y = sin_mag * Mathf.Sin(t * sin_freq);
+        */
+        dest.y = sin_mag * Mathf.Sin(t * sin_freq);
+        dest.x += rb.velocity.x * Time.fixedDeltaTime;
+        t += Time.fixedDeltaTime;
+
+        //rb.AddForce((dest - (Vector2)transform.position).normalized * acceleration);
+
+        // seek dest
+        if(Vector2.Dot(dest - (Vector2)transform.position, transform.up) > 0.0f)
+        {
+            rb.AddTorque(angular_force);
+            if (rb.angularVelocity > max_angular_speed)
+                rb.angularVelocity = max_angular_speed;
+        }
+        else
+        {
+            rb.AddTorque(-1.0f * angular_force);
+            if (rb.angularVelocity < -1.0f * max_angular_speed)
+                rb.angularVelocity = -1.0f * max_angular_speed;
+        }
+
+        rb.AddForce(transform.right * acceleration);
+        if (rb.velocity.magnitude > max_speed)
+            rb.velocity = transform.right * max_speed;
+        rb.angularVelocity = Mathf.Clamp(rb.angularVelocity, -max_angular_speed, max_angular_speed);
+        if (rb.velocity.magnitude > max_speed)
+            rb.velocity = rb.velocity.normalized * max_speed;
+        /*
         rb.AddForce(transform.right * acceleration);
         if (rb.velocity.magnitude > max_speed)
             rb.velocity = transform.right * max_speed;
@@ -102,6 +142,7 @@ public class FlockingMovement : MonoBehaviour {
             }
             cur_straight_time += Time.fixedDeltaTime;
         }
+        */
     }
 
     Vector2 CalcSeperation()

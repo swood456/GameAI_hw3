@@ -97,7 +97,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1249767156052106}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: -13.16, y: 3.52, z: 0}
+=======
+  m_LocalPosition: {x: -12.944752, y: 3.926722, z: 0}
+>>>>>>> c4ff346db3f250ab06b60444103470d1d54632ba
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4722611708349772}
@@ -173,7 +177,14 @@ MonoBehaviour:
   max_angular_speed: 80
   turn_time: 1.5
   straight_time: 6
+<<<<<<< HEAD
   usingConeCheck: 1
+=======
+  sin_mag: 10
+  sin_freq: 0.3
+  dest_x_delta: 2
+  t: 0
+>>>>>>> c4ff346db3f250ab06b60444103470d1d54632ba
   viewAngle: 30
   coneRange: 3
   avoidanceConstant: 1
