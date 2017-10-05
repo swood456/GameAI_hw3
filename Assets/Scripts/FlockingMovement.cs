@@ -84,10 +84,20 @@ public class FlockingMovement : MonoBehaviour {
         dest.x += rb.velocity.x * Time.fixedDeltaTime;
         t += Time.fixedDeltaTime;
 
-        //rb.AddForce((dest - (Vector2)transform.position).normalized * acceleration);
+        
+
+        vel_line.SetPosition(0, transform.position);
+        vel_line.SetPosition(1, dest);
+
+        Vector2 collision = CollisionCheck();
+
+        sep_line.SetPosition(0, transform.position);
+        sep_line.SetPosition(1, (Vector2)transform.position + collision);
+        Vector2 total_force = (dest - (Vector2)transform.position).normalized + collision * avoidanceConstant;
+        rb.AddForce(total_force.normalized * acceleration);
 
         // seek dest
-        if(Vector2.Dot(dest - (Vector2)transform.position, transform.up) > 0.0f)
+        if (Vector2.Dot(dest - (Vector2)transform.position, transform.up) > 0.0f)
         {
             rb.AddTorque(angular_force);
             if (rb.angularVelocity > max_angular_speed)
@@ -100,7 +110,7 @@ public class FlockingMovement : MonoBehaviour {
                 rb.angularVelocity = -1.0f * max_angular_speed;
         }
 
-        rb.AddForce(transform.right * acceleration);
+        
         if (rb.velocity.magnitude > max_speed)
             rb.velocity = transform.right * max_speed;
         rb.angularVelocity = Mathf.Clamp(rb.angularVelocity, -max_angular_speed, max_angular_speed);
