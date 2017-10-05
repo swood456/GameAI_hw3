@@ -20,14 +20,13 @@ public class FlockingMovement : MonoBehaviour {
     [Header("General Movement information")]
     public float turn_time = 0.5f;
     public float straight_time = 1.0f;
-    public float sin_mag = 5.0f;
-    public float sin_freq = 0.5f;
-    public float dest_x_delta = 0.25f;
+    public float sin_mag = 10.0f;
+    public float sin_freq = 0.3f;
+    public float dest_delta_x = 2.0f;
     public float t = 0.0f;
 
-    Vector2 dest;
-
     [Header("Collision info")]
+    public bool usingConeCheck;
     public float viewAngle = 30.0f;
     public float coneRange = 3;
     public float avoidanceConstant = 15.0f;
@@ -46,6 +45,7 @@ public class FlockingMovement : MonoBehaviour {
     public bool turn_down = true;
 
     public Transform leader;
+    Vector2 dest;
 
 	// Use this for initialization
 	void Start () {
@@ -62,7 +62,7 @@ public class FlockingMovement : MonoBehaviour {
 
         cur_turn_time = turn_time / 2;
         dest = transform.position;
-        dest.x += dest_x_delta;
+        dest.x += dest_delta_x;
     }
 
     // Update is called once per frame
@@ -254,11 +254,12 @@ public class FlockingMovement : MonoBehaviour {
         //a collision is predicted
         if (nextCol < coneRange)
         {
-            adjust = closestCollision.position - rb.position;
+            adjust = -(closestCollision.position - rb.position);
             adjust.Normalize();
             //some avoid maneuver
-            //print(this.name + " detects a collision with " + closestCollision.name);
+            print(this.name + " detects a collision with " + closestCollision.name);
         }
+        Debug.DrawRay(rb.position, adjust, Color.gray);
         return adjust;
     }
 
@@ -363,8 +364,16 @@ public class FlockingMovement : MonoBehaviour {
             center_line.SetPosition(1, transform.position + (Vector3)center_strength *center_strength_const);
         }
 
+        Vector2 collision;
         //collision prediction
-        Vector2 collision = CollisionCheck();
+        if (usingConeCheck)
+        {
+            collision = ConeCheck();
+        }
+        else
+        {
+            collision = CollisionCheck();
+        }
 
         Vector2 total = (speration_strength * seperation_strength_const) + match_vel_strength + (center_strength * center_strength_const) + (collision * avoidanceConstant);
 
