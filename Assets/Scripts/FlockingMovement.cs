@@ -8,6 +8,7 @@ public class FlockingMovement : MonoBehaviour {
     public float seperation_strength_const;
     public float center_strength_const;
     public bool is_leader = false;
+    public float leader_center_multiplier = 1.0f;
 
     [Header("Seek information")]
     public float max_speed = 1.0f;
@@ -142,7 +143,23 @@ public class FlockingMovement : MonoBehaviour {
         Vector2 pos_sum = Vector2.zero;
         foreach (Rigidbody2D obj in flock_members)
         {
-            pos_sum += (Vector2) obj.transform.position;
+            FlockingMovement f = obj.GetComponent<FlockingMovement>();
+            if(f)
+            {
+                if(f.is_leader)
+                {
+                    pos_sum += (Vector2)obj.transform.position * leader_center_multiplier;
+                }
+                else
+                {
+                    pos_sum += (Vector2)obj.transform.position;
+                }
+            }
+            else
+            {
+                pos_sum += (Vector2)obj.transform.position;
+            }
+            
         }
 
         Vector2 center_point = pos_sum / flock_members.Length;
