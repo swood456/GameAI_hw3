@@ -163,8 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c16de8627fd51e47a67fe93772a30a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seperation_strength_const: 6
-  center_strength_const: 6
+  seperation_strength_const: 3
+  center_strength_const: 3
   is_leader: 0
   max_speed: 3
   acceleration: 4
@@ -173,6 +173,7 @@ MonoBehaviour:
   turn_time: 1.5
   straight_time: 2
   viewAngle: 30
+  avoidanceConstant: 400
   sep_line: {fileID: 120250949531251150}
   vel_line: {fileID: 120035647745385536}
   center_line: {fileID: 120701366887565038}

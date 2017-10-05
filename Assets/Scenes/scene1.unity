@@ -697,32 +697,6 @@ Prefab:
       propertyPath: is_leader
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1249767156052106, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
-      propertyPath: m_TagString
-      value: GreenFlock
-      objectReference: {fileID: 0}
-    - target: {fileID: 114296452442157634, guid: 6579a59bf1839434f9128514dfdd7e01,
-        type: 2}
-      propertyPath: center_strength_const
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114296452442157634, guid: 6579a59bf1839434f9128514dfdd7e01,
-        type: 2}
-      propertyPath: seperation_strength_const
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 6.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4490472684028758, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6579a59bf1839434f9128514dfdd7e01, type: 2}
   m_IsPrefabParent: 0
