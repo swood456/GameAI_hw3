@@ -23,6 +23,7 @@ public class FlockingMovement : MonoBehaviour {
 
     [Header("Collision info")]
     public float viewAngle = 30.0f;
+    public float coneRange = 3;
     public float avoidanceConstant = 15.0f;
     float colRadius = 0.3f;
 
@@ -109,7 +110,7 @@ public class FlockingMovement : MonoBehaviour {
         Vector2 seperation_dir = Vector2.zero;
         foreach (Rigidbody2D obj in flock_members)
         {
-            Vector2 diff = (gameObject.transform.position - obj.transform.position);
+            Vector2 diff = (rb.position - obj.position);
             float dist = diff.magnitude;
             // for now I am doing linear
             if(dist > float.Epsilon)
@@ -118,10 +119,7 @@ public class FlockingMovement : MonoBehaviour {
             seperation_dir += diff;
         }
 
-
-        //return sep_str * seperation_dir.normalized;
-
-        return seperation_dir.normalized;
+        return (seperation_dir * sep_str).normalized;
     }
 
     Vector2 MatchVelocity()
@@ -203,10 +201,12 @@ public class FlockingMovement : MonoBehaviour {
         }
 
         //a collision is predicted
-        if (nextCol < Mathf.Infinity)
+        if (nextCol < coneRange)
         {
+            adjust = closestCollision.position - rb.position;
+            adjust.Normalize();
             //some avoid maneuver
-            print(this.name + " detects a collision with " + closestCollision.name);
+            //print(this.name + " detects a collision with " + closestCollision.name);
         }
         return adjust;
     }
@@ -270,7 +270,6 @@ public class FlockingMovement : MonoBehaviour {
         relPos.Normalize();
 
         Debug.DrawRay(rb.position, relPos, Color.white);
-        //print(this.name + " detects a collision with " +firstTarget.name);
         return relPos;
 
     }
@@ -294,27 +293,24 @@ public class FlockingMovement : MonoBehaviour {
         if(sep_line)
         {
             sep_line.SetPosition(0, transform.position);
-            sep_line.SetPosition(1, transform.position + (Vector3)speration_strength * 0.125f * seperation_strength_const);
+            sep_line.SetPosition(1, transform.position + (Vector3)speration_strength * seperation_strength_const);
         }
-        //Debug.DrawRay(rb.position, speration_strength, Color.blue);
 
         // match velocity
         Vector2 match_vel_strength = MatchVelocity();
         if(vel_line)
         {
             vel_line.SetPosition(0, transform.position);
-            vel_line.SetPosition(1, transform.position + (Vector3)match_vel_strength * 0.25f);
+            vel_line.SetPosition(1, transform.position + (Vector3)match_vel_strength);
         }
-        //Debug.DrawRay(rb.position, match_vel_strength, Color.red);
 
         // flock to center
         Vector2 center_strength = MoveCenterStrength();
         if (center_line)
         {
             center_line.SetPosition(0, transform.position);
-            center_line.SetPosition(1, transform.position + (Vector3)center_strength * 0.125f * center_strength_const);
+            center_line.SetPosition(1, transform.position + (Vector3)center_strength *center_strength_const);
         }
-        //Debug.DrawRay(rb.position, center_strength, Color.green);
 
         //collision prediction
         Vector2 collision = CollisionCheck();
@@ -326,10 +322,7 @@ public class FlockingMovement : MonoBehaviour {
 
         Debug.DrawRay(rb.position, total, Color.yellow);
 
-        
-
         // update my stats
-        //rb.AddForce(speration_strength + match_vel_strength + center_strength + collision);
         rb.AddForce(total);
 
         // average out rotation
