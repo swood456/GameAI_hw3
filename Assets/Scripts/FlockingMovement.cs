@@ -260,7 +260,7 @@ public class FlockingMovement : MonoBehaviour {
             adjust = -(closestCollision.position - rb.position);
             adjust.Normalize();
             coneColor = Color.red;
-            print(this.name + " detects a collision with " + closestCollision.name);
+            //print(this.name + " detects a collision with " + closestCollision.name);
         }
 
         //create an aproximation of a cone
@@ -271,20 +271,12 @@ public class FlockingMovement : MonoBehaviour {
         {
             conePoints[i + 1] = (Vector3)(rb.position + (Vector2)(Quaternion.Euler(0, 0, (rb.rotation + viewAngle * ((2f * i)/coneRes - 1f))) * Vector2.right).normalized * coneRange);
         }
-        //{ rb.position, rb.position + , rb.position + (Vector2)(Quaternion.Euler(0, 0, rb.rotation) * Vector2.right).normalized * coneRange, rb.position + (Vector2)(Quaternion.Euler(0, 0, rb.rotation - viewAngle) * Vector2.right).normalized * coneRange };
 
         cone_line.positionCount = coneRes;
         cone_line.SetPositions(conePoints);
         cone_line.startColor = coneColor;
         cone_line.endColor = coneColor;
 
-        //for (int i = 1; i < conePoints.Length; ++i)
-        //{
-        //    Debug.DrawLine(conePoints[i - 1], conePoints[i], coneColor);
-        //}
-        //Debug.DrawLine(conePoints[conePoints.Length - 1], conePoints[0], coneColor);
-
-        //Debug.DrawRay(rb.position, adjust, coneColor);
 
         return adjust;
     }
